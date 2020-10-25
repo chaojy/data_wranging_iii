@@ -127,4 +127,23 @@ brfss_2010 =
   content("parsed")
 ```
 
+## Some data aren't so nice
 
+Let's look at Pokemon ..
+
+```{r}
+pokemon_data =
+  GET("https://pokeapi.co/api/v2/pokemon/ditto") %>%
+  content
+
+pokemon_data$name
+pokemon_data$height
+pokemon_data$abilities
+```
+
+
+## Closing thoughts
+
+It is easy to scraping and taking data from APIs, you can make some unreasonable requests
+
+Be reasonable - each time you access a website, you can download a lot of data

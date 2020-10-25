@@ -139,3 +139,66 @@ brfss_2010 =
     ##   locationid = col_logical()
     ## )
     ## See spec(...) for full column specifications.
+
+## Some data aren’t so nice
+
+Let’s look at Pokemon ..
+
+``` r
+pokemon_data =
+  GET("https://pokeapi.co/api/v2/pokemon/ditto") %>%
+  content
+
+pokemon_data$name
+```
+
+    ## [1] "ditto"
+
+``` r
+pokemon_data$height
+```
+
+    ## [1] 3
+
+``` r
+pokemon_data$abilities
+```
+
+    ## [[1]]
+    ## [[1]]$ability
+    ## [[1]]$ability$name
+    ## [1] "limber"
+    ## 
+    ## [[1]]$ability$url
+    ## [1] "https://pokeapi.co/api/v2/ability/7/"
+    ## 
+    ## 
+    ## [[1]]$is_hidden
+    ## [1] FALSE
+    ## 
+    ## [[1]]$slot
+    ## [1] 1
+    ## 
+    ## 
+    ## [[2]]
+    ## [[2]]$ability
+    ## [[2]]$ability$name
+    ## [1] "imposter"
+    ## 
+    ## [[2]]$ability$url
+    ## [1] "https://pokeapi.co/api/v2/ability/150/"
+    ## 
+    ## 
+    ## [[2]]$is_hidden
+    ## [1] TRUE
+    ## 
+    ## [[2]]$slot
+    ## [1] 3
+
+## Closing thoughts
+
+It is easy to scraping and taking data from APIs, you can make some
+unreasonable requests
+
+Be reasonable - each time you access a website, you can download a lot
+of data
