@@ -1,0 +1,31 @@
+Reading data from the web
+================
+
+## Scrape a table from a website
+
+I want the first table from [this
+page](http://samhda.s3-us-gov-west-1.amazonaws.com/s3fs-public/field-uploads/2k15StateFiles/NSDUHsaeShortTermCHG2015.htm)
+
+read in the html
+
+``` r
+#first i want to get the html
+#then extract what I want from it
+#then some additional steps
+
+url = "http://samhda.s3-us-gov-west-1.amazonaws.com/s3fs-public/field-uploads/2k15StateFiles/NSDUHsaeShortTermCHG2015.htm"
+
+drug_use_html = read_html(url)
+```
+
+extract the table(s); focus on the first one
+
+``` r
+tabl_marj =
+drug_use_html %>% 
+  html_nodes(css = "table") %>% 
+  first() %>%
+  html_table() %>%
+  slice(-1) %>% 
+  as_tibble()
+```
