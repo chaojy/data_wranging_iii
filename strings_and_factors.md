@@ -244,3 +244,46 @@ data_marj =
   ) %>% 
   filter(!(State %in% c("Total U.S.", "Northeast", "Midwest", "South", "West")))
 ```
+
+## NSDUH – factors
+
+``` r
+data_marj %>% 
+  filter(age == "12-17") %>% 
+  mutate(
+    State = fct_relevel(State, "Texas")
+    ## Texas is made the default level and now a factor variable
+  ) %>% 
+  ggplot(aes(x = State, y = percent, color = year)) +
+  geom_point() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
+```
+
+<img src="strings_and_factors_files/figure-gfm/unnamed-chunk-11-1.png" width="90%" />
+
+``` r
+data_marj %>% 
+  filter(age == "12-17") %>% 
+  mutate(
+    State = fct_relevel(State, "Texas", "Oklahoma")
+  ) %>% 
+  ggplot(aes(x = State, y = percent, color = year)) +
+  geom_point() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
+```
+
+<img src="strings_and_factors_files/figure-gfm/unnamed-chunk-11-2.png" width="90%" />
+
+``` r
+data_marj %>% 
+  filter(age == "12-17") %>% 
+  mutate(
+    State = fct_reorder(State, percent)
+    ##what this does is reorders your factor variable by some other variable that you are interested in, in this case this is percent
+  ) %>% 
+  ggplot(aes(x = State, y = percent, color = year)) +
+  geom_point() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
+```
+
+<img src="strings_and_factors_files/figure-gfm/unnamed-chunk-11-3.png" width="90%" />
