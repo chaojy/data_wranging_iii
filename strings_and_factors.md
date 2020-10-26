@@ -211,3 +211,36 @@ as.numeric(factor_vec)
 ``` r
 ## behind the scenes coding of factors in R is one of the most confusing things.  in this case, R defaulted to alphabetical order for male and female 
 ```
+
+## NSDUH – strings
+
+``` r
+url = "http://samhda.s3-us-gov-west-1.amazonaws.com/s3fs-public/field-uploads/2k15StateFiles/NSDUHsaeShortTermCHG2015.htm"
+
+tabl_marj =
+  read_html(url) %>% 
+  html_nodes(css = "table") %>% 
+  first() %>%
+  html_table() %>%
+  slice(-1) %>% 
+  as_tibble()
+```
+
+``` r
+data_marj =
+  tabl_marj %>% 
+  select(-contains("P Value")) %>% 
+  pivot_longer(
+    -State, 
+    names_to = "age_year",
+    values_to = "percent"
+  ) %>% 
+  separate(age_year, into = c("age", "year"), sep = "\\(") %>% 
+  mutate(
+    year = str_replace(year, "\\)", ""),
+    percent = str_replace(percent, "[a-c]$", ""),
+    ##becareful here - as far as we know, only a-c and he is specifying this range only - if he is wrong, the code would break and that is desired
+    percent = as.numeric(percent)
+  ) %>% 
+  filter(!(State %in% c("Total U.S.", "Northeast", "Midwest", "South", "West")))
+```
